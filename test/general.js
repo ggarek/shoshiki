@@ -45,5 +45,13 @@ describe('String.format::general', function() {
         assert.equal(input.format(p), input.replace(/{\d+}/, p.toString()));
       });
     });
+    
+    it('should call Object.toString if parameter has no toString method', function () {
+      var input = '{0}',
+          p = Object.create(null);
+      
+      assert.doesNotThrow(function () { input.format(p); });
+      assert.equal(input.format(p), Object.prototype.toString.call(p));
+    });
   });
 });
